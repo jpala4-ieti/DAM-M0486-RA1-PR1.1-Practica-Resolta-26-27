@@ -20,13 +20,16 @@ public class PR113sobreescriu {
         escriureFrases(camiFitxer);
     }
 
-    // Mètode que escriu les frases sobreescrivint el fitxer amb UTF-8; cada línia acaba amb un salt de línia
+    // Mètode que escriu les frases sobreescrivint el fitxer amb UTF-8;
+    // cada línia acaba amb un salt de línia
     public static void escriureFrases(String camiFitxer) {
-        // FileWriter sense el paràmetre "append" buida el fitxer en obrir-lo (i el crea si no existeix)
-        try (BufferedWriter escriptor = new BufferedWriter(new FileWriter(camiFitxer, StandardCharsets.UTF_8))) {
+        // FileWriter sense el paràmetre "append" buida el fitxer en obrir-lo
+        // (i el crea si no existeix)
+        try (BufferedWriter escriptor = new BufferedWriter(
+                new FileWriter(camiFitxer, StandardCharsets.UTF_8))) {
             for (String frase : FRASES) {
                 escriptor.write(frase);
-                // "\n" i no newLine(): l'enunciat demana "\n" exacte, i newLine() escriu "\r\n" a Windows
+                // "\n" i no newLine(): l'enunciat demana "\n", i newLine() escriu "\r\n" a Windows
                 escriptor.write("\n");
             }
         } catch (IOException e) {

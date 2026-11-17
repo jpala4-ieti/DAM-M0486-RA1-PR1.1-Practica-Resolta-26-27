@@ -3,6 +3,7 @@ package com.project;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,12 +29,15 @@ public class PR114linies {
         for (int i = 0; i < QUANTITAT_NUMEROS; i++) {
             numeros.add(String.valueOf(generador.nextInt(LIMIT_SUPERIOR)));
         }
+        // String.join posa el salt només ENTRE els números: el fitxer acaba amb l'últim dígit.
+        // Files.write(path, llista) no serveix aquí: afegeix un salt després de cada línia,
+        // també de l'última
+        String contingut = String.join("\n", numeros);
 
         try {
-            // String.join posa el salt només ENTRE els números, així el fitxer acaba amb l'últim dígit.
-            // Files.write(path, llista) no serveix aquí: afegeix un salt després de cada línia, també de l'última
-            Files.writeString(Path.of(camiFitxer), String.join("\n", numeros), StandardCharsets.UTF_8);
-        } catch (IOException e) {
+            // Path.of va dins del try: una ruta no vàlida llença InvalidPathException
+            Files.writeString(Path.of(camiFitxer), contingut, StandardCharsets.UTF_8);
+        } catch (IOException | InvalidPathException e) {
             System.out.println("No s'ha pogut escriure el fitxer: " + e.getMessage());
         }
     }

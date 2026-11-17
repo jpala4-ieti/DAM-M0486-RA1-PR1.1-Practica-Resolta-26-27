@@ -20,14 +20,16 @@ public class PR113append {
         afegirFrases(camiFitxer);
     }
 
-    // Mètode que afegeix les frases al final del fitxer amb UTF-8; cada línia acaba amb un salt de línia
+    // Mètode que afegeix les frases al final del fitxer amb UTF-8;
+    // cada línia acaba amb un salt de línia
     public static void afegirFrases(String camiFitxer) {
-        // El tercer paràmetre (append = true) fa que s'escrigui al final, sense esborrar el que ja hi havia;
-        // si el fitxer no existeix, el crea
-        try (BufferedWriter escriptor = new BufferedWriter(new FileWriter(camiFitxer, StandardCharsets.UTF_8, true))) {
+        // El tercer paràmetre (append = true) fa que s'escrigui al final, sense esborrar
+        // el que ja hi havia; si el fitxer no existeix, el crea
+        try (BufferedWriter escriptor = new BufferedWriter(
+                new FileWriter(camiFitxer, StandardCharsets.UTF_8, true))) {
             for (String frase : FRASES) {
                 escriptor.write(frase);
-                // "\n" i no newLine(): l'enunciat demana "\n" exacte, i newLine() escriu "\r\n" a Windows
+                // "\n" i no newLine(): l'enunciat demana "\n", i newLine() escriu "\r\n" a Windows
                 escriptor.write("\n");
             }
         } catch (IOException e) {

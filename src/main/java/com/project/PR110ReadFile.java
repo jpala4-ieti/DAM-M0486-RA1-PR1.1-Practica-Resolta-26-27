@@ -15,7 +15,8 @@ public class PR110ReadFile {
     // Funció que llegeix el fitxer i mostra les línies amb numeració
     public static void llegirIMostrarFitxer(String camiFitxer) {
         // try-with-resources: el lector es tanca sol, tant si tot va bé com si hi ha un error
-        try (BufferedReader lector = new BufferedReader(new FileReader(camiFitxer, StandardCharsets.UTF_8))) {
+        try (BufferedReader lector = new BufferedReader(
+                new FileReader(camiFitxer, StandardCharsets.UTF_8))) {
             String linia;
             int numeroLinia = 1;
             // readLine() retorna null quan s'arriba al final del fitxer

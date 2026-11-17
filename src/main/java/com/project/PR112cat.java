@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
 
 public class PR112cat {
@@ -28,13 +29,16 @@ public class PR112cat {
             return;
         }
 
-        // No cal comprovar abans si existeix: si no hi és, FileReader llença FileNotFoundException,
-        // que és una IOException, i es tracta igual que qualsevol altre error de lectura
-        try (BufferedReader lector = new BufferedReader(new FileReader(arxiu, StandardCharsets.UTF_8))) {
-            String linia;
-            while ((linia = lector.readLine()) != null) {
-                System.out.println(linia);
-            }
+        // No cal comprovar abans si existeix: si no hi és, FileReader llença
+        // FileNotFoundException, que és una IOException com qualsevol altre error de lectura
+        try (BufferedReader lector = new BufferedReader(
+                new FileReader(arxiu, StandardCharsets.UTF_8))) {
+            // Primer es llegeix tot el fitxer i després es mostra: si la lectura falla a mitges,
+            // només surt el missatge d'error i no un tros del contingut
+            StringWriter contingut = new StringWriter();
+            lector.transferTo(contingut);
+            // print i no println: com la comanda cat, no s'hi afegeix cap salt de línia
+            System.out.print(contingut);
         } catch (IOException e) {
             System.out.println("El fitxer no existeix o no és accessible.");
         }

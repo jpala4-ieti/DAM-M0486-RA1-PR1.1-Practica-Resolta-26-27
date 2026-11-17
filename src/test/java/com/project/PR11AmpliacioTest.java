@@ -25,8 +25,10 @@ class PR11AmpliacioTest {
 
         // Si el fitxer no fos UTF-8 vàlid, readString llençaria MalformedInputException
         String contingut = Files.readString(fitxer, StandardCharsets.UTF_8);
-        assertTrue(contingut.contains("☕"), "L'àlies :coffee: s'hauria d'haver convertit en l'emoji.");
-        assertFalse(contingut.matches("(?s).*:[a-z0-9_]+:.*"), "No hauria de quedar cap àlies sense convertir.");
+        assertTrue(contingut.contains("☕"),
+                "L'àlies :coffee: s'hauria d'haver convertit en l'emoji.");
+        assertFalse(contingut.matches("(?s).*:[a-z0-9_]+:.*"),
+                "No hauria de quedar cap àlies sense convertir.");
         assertEquals(5, contingut.lines().count(), "El fitxer hauria de tenir 5 línies.");
     }
 }
